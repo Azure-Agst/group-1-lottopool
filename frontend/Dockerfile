@@ -32,7 +32,7 @@ FROM nginx:1.23.3 AS server
 
 # Set Labels
 LABEL org.opencontainers.image.authors="me@azureagst.dev"
-LABEL org.opencontainers.image.source="https://github.com/FSU-SP2023-SELab/group-1-lottopool"
+LABEL org.opencontainers.image.source="https://github.com/Azure-Agst/group-1-lottopool"
 
 # Set working dir
 WORKDIR /usr/src
