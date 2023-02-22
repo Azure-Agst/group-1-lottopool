@@ -63,7 +63,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v4
         with:
-          images: ${{ env.REGISTRY }}/fsu-sp2023-selab/lp-frontend
+          images: ${{ env.REGISTRY }}/azure-agst/lp-frontend
           tags: |
             type=raw,value=latest
             type=raw,value=${{ github.ref_name }}
@@ -83,8 +83,8 @@ jobs:
           file: ./frontend/Dockerfile
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          build-args: |
-            VITE_BACKEND_URL=${{ secrets.VITE_BACKEND_URL }}
+          #build-args: |
+          #  EXAMPLE=${{ secrets.EXAMPLE }}
           push: true
 
   # 2.) Build Backend
@@ -110,7 +110,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v4
         with:
-          images: ${{ env.REGISTRY }}/fsu-sp2023-selab/lp-backend
+          images: ${{ env.REGISTRY }}/azure-agst/lp-backend
           tags: |
             type=raw,value=latest
             type=raw,value=${{ github.ref_name }}
