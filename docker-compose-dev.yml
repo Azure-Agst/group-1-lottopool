@@ -5,25 +5,28 @@ services:
   # Frontend NGINX
   # - Only env vars needed are proxy info
   frontend:
-    #image: ghcr.io/fsu-sp2023-selab/lp-frontend:v0.1.1
-    image: ghcr.io/azure-agst/lp-frontend:develop
+    image: lp-frontend:dev
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        VITE_BACKEND_URL: ${VITE_BACKEND_URL}
     environment:
       API_HOST: backend
       API_PORT: 3001
     ports:
       - protocol: tcp
-        published: 80
+        published: 3000
         target: 80
 
   # Gunicorn API server
   # - Most env vars are handled through Doppler
   # - A few are overridden though, such as DB_URL
   backend:
-    #image: ghcr.io/fsu-sp2023-selab/lp-backend:v0.1.1
-    image: ghcr.io/azure-agst/lp-backend:develop
-    #command: /bin/bash
-    #stdin_open: true
-    #tty: true
+    image: lp-backend:dev
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
     environment:
       DB_URL: mariadb
       DB_USERNAME: ${MARIADB_USER}
@@ -39,8 +42,6 @@ services:
       MARIADB_USER: ${MARIADB_USER}
       MARIADB_PASSWORD: ${MARIADB_PASSWORD}
       MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
-    ports:
-      - "3306:3306"
     volumes:
       - type: volume
         source: mariadb-data
